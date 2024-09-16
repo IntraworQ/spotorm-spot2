@@ -562,7 +562,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         $countCopy = clone $this->builder();
         $stmt = $countCopy->select('COUNT(*)')->resetQueryPart('orderBy')->execute();
@@ -576,7 +576,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @return \Spot\Entity\Collection
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         // Execute query and return result set for iteration
         $result = $this->execute();
@@ -603,7 +603,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @inheritdoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }
@@ -749,7 +749,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @inheritdoc
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         $results = $this->getIterator();
 
@@ -761,7 +761,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @inheritdoc
      */
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         $results = $this->getIterator();
 
@@ -773,13 +773,13 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @inheritdoc
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $results = $this->getIterator();
         if ($key === null) {
-            return $results[] = $value;
+            $results[] = $value;
         } else {
-            return $results[$key] = $value;
+            $results[$key] = $value;
         }
     }
 
@@ -788,7 +788,7 @@ class Query implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerial
      *
      * @inheritdoc
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $results = $this->getIterator();
         unset($results[$key]);
